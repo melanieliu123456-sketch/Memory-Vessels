@@ -36,13 +36,11 @@ void setup() {
 
     float startAngle = random(TWO_PI);
     float distance = random(0, bigR + 100);
-
     bx[i] = bigX + cos(startAngle) * distance;
     by[i] = bigY + sin(startAngle) * distance;
 
     float speed = 1.3;
     float moveAngle = random(TWO_PI);
-
     vx[i] = cos(moveAngle) * speed;
     vy[i] = sin(moveAngle) * speed;
   }
@@ -61,19 +59,20 @@ void toodle(int x, int y) {
   pushMatrix();
   translate(x, y);
   
-  //dark blue base
+  //base
   fill(darkblue);
   circle(400, 400, 450);
   circle(190, 170, 240);
   circle(610, 170, 240);
-
+  
+  //head
   movingBalls();
-
   noFill();
   stroke(outline);
   strokeWeight(15);
   circle(400, 400, 400);
   
+  //ears
   noStroke();
   spinningEars(190, 170, angle1);
   spinningEars(610, 170, angle2);
@@ -92,28 +91,23 @@ void movingBalls() {
   for (int i = 0; i < numBalls; i++) {
     bx[i] += vx[i];
     by[i] += vy[i];
-
     float d = dist(bx[i], by[i], bigX, bigY);
 
     if (d - br[i] > bigR) {
       float nx = (bx[i] - bigX) / d;
       float ny = (by[i] - bigY) / d;
-
       float dot = vx[i] * nx + vy[i] * ny;
 
       vx[i] = vx[i] - 2 * dot * nx;
       vy[i] = vy[i] - 2 * dot * ny;
-
       bx[i] = bigX + nx * (bigR + br[i]);
       by[i] = bigY + ny * (bigR + br[i]);
     }
-
     ballsLayer.fill(warmColors[i % warmColors.length], 150);
     ballsLayer.circle(bx[i], by[i], br[i] * 2);
   }
 
   ballsLayer.endDraw();
-
   maskLayer.beginDraw();
   maskLayer.background(0);
   maskLayer.noStroke();
@@ -123,7 +117,6 @@ void movingBalls() {
 
   PImage clippedBalls = ballsLayer.get();
   clippedBalls.mask(maskLayer.get());
-
   image(clippedBalls, 0, 0);
 }
 
@@ -131,6 +124,7 @@ void spinningEars(int x, int y, float a) {
   pushMatrix();
   translate(x, y);
   rotate(a);
+  
   fill(outline);
   circle(0, 0, 190);
   fill(earsred);
