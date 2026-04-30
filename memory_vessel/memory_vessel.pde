@@ -14,7 +14,7 @@ color geargreen = #8DD252;
 color[] warmColors = {#F25F5F, #F28B82, #F6B26B, #FFD966, #EFA7A7};
 
 int numBalls = 14;
-float angle1, angle2;
+float Ear_left, Ear_right, Gear_Y, Gear_R, Gear_G;
 
 float[] bx = new float[numBalls];
 float[] by = new float[numBalls];
@@ -25,8 +25,10 @@ float[] vy = new float[numBalls];
 PGraphics ballsLayer;
 PGraphics maskLayer;
 
+boolean gearTurn = true;
+
 void setup() {
-  size(800, 800);
+  size(800, 650);
 
   ballsLayer = createGraphics(width, height);
   maskLayer = createGraphics(width, height);
@@ -47,12 +49,23 @@ void setup() {
 }
 
 void draw() {
-  background(255);
+  background(#99BA87);
+  
+  pushMatrix();
+  translate(0, -50);
+  
   noStroke();
+  gear_Y(400, 780, 9);
+  fill(#4962CB);
+  ellipse(400, 800, 850, 700);
   toodle(0, 50);
-  gear1(400, 400, 1);
-  angle1 += radians(8);
-  angle2 -= radians(8);
+  if (gearTurn) Gear_Y += radians(3);
+  Ear_left += radians(8);
+  Ear_right -= radians(8);
+  
+  if (frameCount % 10 == 0) gearTurn = !gearTurn;
+  
+  popMatrix();
 }
 
 void toodle(int x, int y) {
@@ -74,8 +87,8 @@ void toodle(int x, int y) {
   
   //ears
   noStroke();
-  spinningEars(190, 170, angle1);
-  spinningEars(610, 170, angle2);
+  spinningEars(190, 170, Ear_left);
+  spinningEars(610, 170, Ear_right);
 
   popMatrix();
 }
@@ -141,16 +154,32 @@ void spinningEars(int x, int y, float a) {// x coordinate, y coordinate, rotate 
   popMatrix();
 }
 
-void gear1(int x, int y, int s) {// x coordinate, y coordinate, scale
+void gear_Y(int x, int y, int s) {// x coordinate, y coordinate, scale
   pushMatrix();
   translate(x, y);
   scale(s);
-  rotate(1);
+  rotate(Gear_Y);
   
   fill(gearyellow);
   circle(0, 0, 100);
   for (int i = 0; i < 13; i += 1){
-    rect
+    rect(-8, -56, 16, 112);
+    rotate(PI/6);
+  }
+  
+  popMatrix();
+}
+
+void gear_R(int x, int y, int s) {
+  pushMatrix();
+  translate(x, y);
+  scale(s);
+  rotate(Gear_R);
+  
+  fill(gearred);
+  circle(0, 0, 100);
+  for(int i = 0; i < 9; i += 1) {
+    circle(0, 0, 100);
   }
   
   popMatrix();
