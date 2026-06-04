@@ -3,6 +3,7 @@
 //Apr 24, 2026
 //Memory vessel
 
+//color variable
 color darkblue = #4F71CE;
 color outline = #7FC2F7;
 color earsred = #B499B2;
@@ -13,9 +14,8 @@ color gearred = #E84C4D;
 color geargreen = #8DD252;
 color[] warmColors = {#F25F5F, #F28B82, #F6B26B, #FFD966, #EFA7A7};
 
+//inside mouse
 int numBalls = 14;
-float Ear_left, Ear_right, Gear_Y, Gear_R, Gear_G;
-
 float[] bx = new float[numBalls];
 float[] by = new float[numBalls];
 float[] br = new float[numBalls];
@@ -25,14 +25,16 @@ float[] vy = new float[numBalls];
 PGraphics ballsLayer;
 PGraphics maskLayer;
 
+//spining parts
+float Ear_left, Ear_right, Gear_Y, Gear_R, Gear_G;
 boolean gearTurn = true;
 
 void setup() {
   size(800, 650);
-
+  //inside mouseface
   ballsLayer = createGraphics(width, height);
   maskLayer = createGraphics(width, height);
-
+  
   for (int i = 0; i < numBalls; i++) {
     br[i] = random(15, 55);
 
@@ -49,11 +51,12 @@ void setup() {
 }
 
 void draw() {
-  background(#99BA87);
+  background(#B2C6A6);
   
   pushMatrix();
   translate(0, -50);
   
+  //gear behind& spining ears
   noStroke();
   gear_Y(400, 780, 9);
   fill(#4962CB);
